@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+    Contributor(s):
+    - LouCypher (original code)
+-->
+
+<?xml-stylesheet type="text/css" href="../skin/"?>
+
+<!DOCTYPE overlay SYSTEM "../locale/">
+
+<overlay id="OpenInPrivateWindow-Overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript" src="openInPrivateWindow.js"/>
+
+  <commandset id="mainCommandSet">
+    <command id="openPrivateWindow:page"
+             oncommand="openInPrivateWindow('page', gContextMenu);"/>
+    <command id="openPrivateWindow:link"
+             oncommand="openInPrivateWindow('link', gContextMenu);"/>
+    <command id="openPrivateWindow:frame"
+             oncommand="openInPrivateWindow('frame', gContextMenu);"/>
+  </commandset>
+
+  <vbox id="appmenuPrimaryPane">
+    <menuitem id="appmenu-closePrivate"
+              insertbefore="appmenu-quit"
+              label="&OpenInPrivateWindow.menu.exit.label;"
+              accesskey="&OpenInPrivateWindow.menu.exit.accesskey;"
+              oncommand="BrowserTryToCloseWindow();"/>
+  </vbox>
+
+  <menupopup id="menu_FilePopup">
+    <menuitem id="filemenu-closePrivate"
+              insertbefore="menu_FileQuitItem"
+              label="&OpenInPrivateWindow.menu.exit.label;"
+              accesskey="&OpenInPrivateWindow.menu.exit.accesskey;"
+              oncommand="BrowserTryToCloseWindow();"/>
+  </menupopup>
+
+  <menupopup id="contentAreaContextMenu">
+    <menuitem id="context-openpageprivatenew"
+              insertafter="context-bookmarkpage"
+              label="&OpenInPrivateWindow.menu.open.pagenew.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.pagenew.accesskey;"
+              command="openPrivateWindow:page"/>
+
+    <menuitem id="context-openpageprivate"
+              insertafter="context-openpageprivatenew"
+              label="&OpenInPrivateWindow.menu.open.page.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.page.accesskey;"
+              command="openPrivateWindow:page"/>
+
+    <menuitem id="context-openlinkprivate2"
+              insertafter="context-openlinkprivate"
+              label="&OpenInPrivateWindow.menu.open.link.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.link.accesskey;"
+              command="openPrivateWindow:link"/>
+
+    <menuitem id="context-openframeprivatenew"
+              insertafter="frame"
+              label="&OpenInPrivateWindow.menu.open.framenew.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.framenew.accesskey;"
+              command="openPrivateWindow:frame"/>
+
+    <menuitem id="context-openframeprivate"
+              insertafter="frame"
+              label="&OpenInPrivateWindow.menu.open.frame.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.frame.accesskey;"
+              command="openPrivateWindow:frame"/>
+
+    <menuitem id="context-closeprivatewindow"
+              insertafter="page-menu-separator"
+              label="&OpenInPrivateWindow.menu.exit.label;"
+              accesskey="&OpenInPrivateWindow.menu.exit.accesskey;"
+              oncommand="BrowserTryToCloseWindow();"/>
+    <menuseparator id="context-closeprivatewindow-separator"
+                   insertafter="context-closeprivatewindow"/>
+  </menupopup>
+
+</overlay>

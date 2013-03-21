@@ -1,0 +1,4 @@
+content   openinprivatewindow                     chrome/content/
+skin      openinprivatewindow   classic/1.0       chrome/skin/classic/
+locale    openinprivatewindow   en-US             chrome/locale/en-US/
+overlay   chrome://browser/content/browser.xul    chrome://openinprivatewindow/content/browserOverlay.xul

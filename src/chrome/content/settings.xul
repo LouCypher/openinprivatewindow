@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+    Contributor(s):
+    - LouCypher (original code)
+-->
+
+<!DOCTYPE vbox SYSTEM "chrome://openinprivatewindow/locale/">
+
+<vbox xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <setting pref="extensions.OpenInPrivateWindow.reusePrivateWindow"
+           type="bool"
+           title="&OpenInPrivateWindow.settings.reusePrivateWindow.title;"
+           desc="&OpenInPrivateWindow.settings.reusePrivateWindow.desc;"/>
+
+  <setting pref="extensions.OpenInPrivateWindow.sendReferrer"
+           type="bool"
+           title="&OpenInPrivateWindow.settings.sendReferrer.title;"
+           desc="&OpenInPrivateWindow.settings.sendReferrer.desc;"/>
+
+  <setting pref="extensions.OpenInPrivateWindow.loadInBackground"
+           type="bool"
+           title="&OpenInPrivateWindow.settings.loadInBackground.title;"
+           desc="&OpenInPrivateWindow.settings.loadInBackground.desc;"/>
+
+  <setting pref="extensions.OpenInPrivateWindow.showOpenLink"
+           type="bool"
+           title="&OpenInPrivateWindow.settings.showOpenLink.title;"/>
+
+  <setting pref="extensions.OpenInPrivateWindow.showOpenPage"
+           type="bool"
+           title="&OpenInPrivateWindow.settings.showOpenPage.title;"/>
+
+  <setting pref="extensions.OpenInPrivateWindow.showOpenFrame"
+           type="bool"
+           title="&OpenInPrivateWindow.settings.showOpenFrame.title;"/>
+
+  <setting pref="extensions.OpenInPrivateWindow.showExitPrivateContextMenu"
+           type="bool"
+           title="&OpenInPrivateWindow.settings.showExitPrivateContextMenu.title;"/>
+
+  <setting pref="extensions.OpenInPrivateWindow.showExitPrivateMenu"
+           type="bool"
+           title="&OpenInPrivateWindow.settings.showExitPrivateMenu.title;"/>
+
+  <setting pref="extensions.OpenInPrivateWindow.showMenuIcons"
+           type="bool"
+           title="&OpenInPrivateWindow.settings.showMenuIcons.title;"/>
+
+</vbox>

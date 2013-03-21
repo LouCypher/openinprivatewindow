@@ -1,0 +1,24 @@
+<!ENTITY OpenInPrivateWindow.menu.exit.label                "Exit Private Window">
+<!ENTITY OpenInPrivateWindow.menu.exit.accesskey            "x">
+<!ENTITY OpenInPrivateWindow.menu.open.link.label           "Open Link in Private Window">
+<!ENTITY OpenInPrivateWindow.menu.open.link.accesskey       "P">
+<!ENTITY OpenInPrivateWindow.menu.open.pagenew.label        "Open Page in New Private Window">
+<!ENTITY OpenInPrivateWindow.menu.open.pagenew.accesskey    "e">
+<!ENTITY OpenInPrivateWindow.menu.open.page.label           "Open Page in Private Window">
+<!ENTITY OpenInPrivateWindow.menu.open.page.accesskey       "e">
+<!ENTITY OpenInPrivateWindow.menu.open.framenew.label       "Open Frame in New Private Window">
+<!ENTITY OpenInPrivateWindow.menu.open.framenew.accesskey   "O">
+<!ENTITY OpenInPrivateWindow.menu.open.frame.label          "Open Frame in Private Window">
+<!ENTITY OpenInPrivateWindow.menu.open.frame.accesskey      "O">
+<!ENTITY OpenInPrivateWindow.settings.reusePrivateWindow.title          "Reuse Private Window">
+<!ENTITY OpenInPrivateWindow.settings.reusePrivateWindow.desc           "Don't open new Private Window if it's already open. Use it instead.">
+<!ENTITY OpenInPrivateWindow.settings.sendReferrer.title                "Send original referrer">
+<!ENTITY OpenInPrivateWindow.settings.sendReferrer.desc                 "Send original referrer when I open a URL in Private Window.">
+<!ENTITY OpenInPrivateWindow.settings.loadInBackground.title            "Load Private Window in background">
+<!ENTITY OpenInPrivateWindow.settings.loadInBackground.desc             "When I open a URL in Private Window, don't switch to it. This option only works on reuse Private Window.">
+<!ENTITY OpenInPrivateWindow.settings.showExitPrivateMenu.title         "Show &quot;Exit Private Window&quot; menu">
+<!ENTITY OpenInPrivateWindow.settings.showExitPrivateContextMenu.title  "Show &quot;Exit Private Window&quot; in context menu">
+<!ENTITY OpenInPrivateWindow.settings.showOpenLink.title                "Show &quot;Open Link in Private Window&quot; in context menu">
+<!ENTITY OpenInPrivateWindow.settings.showOpenPage.title                "Show &quot;Open Page in Private Window&quot; in context menu">
+<!ENTITY OpenInPrivateWindow.settings.showOpenFrame.title               "Show &quot;Open Frame in Private Window&quot; in context menu">
+<!ENTITY OpenInPrivateWindow.settings.showMenuIcons.title               "Show menu icons">
