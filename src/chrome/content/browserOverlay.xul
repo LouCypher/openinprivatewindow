@@ -42,6 +42,22 @@
               oncommand="BrowserTryToCloseWindow();"/>
   </menupopup>
 
+  <menupopup id="menu_ToolsPopup">
+    <menuitem id="ToolsPopup_openinprivatewindow-options"
+              insertbefore="menu_preferences"
+              class="menuitem-iconic"
+              label="&OpenInPrivateWindow.menu.options.label;"
+              oncommand="BrowserOpenAddonsMgr('addons://detail/OpenInPrivateWindow%40loucypher/preferences');"/>
+  </menupopup>
+
+  <menupopup id="appmenu_customizeMenu">
+    <menuitem id="appmenu_openinprivatewindow-options"
+              insertafter="appmenu_preferences"
+              class="menuitem-iconic"
+              label="&OpenInPrivateWindow.menu.options.label;"
+              oncommand="BrowserOpenAddonsMgr('addons://detail/OpenInPrivateWindow%40loucypher/preferences');"/>
+  </menupopup>
+
   <menupopup id="contentAreaContextMenu">
     <menuitem id="context-openpageprivatenew"
               insertafter="context-bookmarkpage"

@@ -10,6 +10,8 @@
 <!ENTITY OpenInPrivateWindow.menu.open.framenew.accesskey   "O">
 <!ENTITY OpenInPrivateWindow.menu.open.frame.label          "Open Frame in Private Window">
 <!ENTITY OpenInPrivateWindow.menu.open.frame.accesskey      "O">
+<!ENTITY OpenInPrivateWindow.menu.options.label             "Open in Private Window Options">
+<!ENTITY OpenInPrivateWindow.menu.options.accesskey         "P">
 <!ENTITY OpenInPrivateWindow.settings.reusePrivateWindow.title          "Reuse Private Window">
 <!ENTITY OpenInPrivateWindow.settings.reusePrivateWindow.desc           "Don't open new Private Window if it's already open. Use it instead.">
 <!ENTITY OpenInPrivateWindow.settings.sendReferrer.title                "Send original referrer">
