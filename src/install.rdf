@@ -6,10 +6,10 @@
     <em:type>2</em:type>
     <!--em:unpack>true</em:unpack-->
     <em:name>Open in Private Window</em:name>
-    <em:version>0.1a2</em:version>
+    <em:version>0.1a3</em:version>
     <em:description>Add more context menu items and options to open a URL in Firefox Private Window.</em:description>
     <em:creator>LouCypher</em:creator>
-    <em:homepageURL>https://github.com/LouCypher/openinprivatewindow</em:homepageURL>
+    <em:homepageURL>http://loucypher.github.com/openinprivatewindow</em:homepageURL>
     <em:optionsURL>chrome://openinprivatewindow/content/settings.xul</em:optionsURL>
     <em:optionsType>2</em:optionsType>
     <em:targetApplication>

@@ -50,11 +50,11 @@
 
     if (isWindowReuse()) {
       var index = 1;
-      var em = Services.ww.getWindowEnumerator();
+      var em = Services.wm.getEnumerator("navigator:browser");
       while (em.hasMoreElements()) {
         let win = em.getNext();
-        let browser = win.gBrowser;
         if (isWindowPrivate(win)) {
+          var browser = win.gBrowser;
           if (isBlankPageURL(browser.currentURI.spec)) {
             win.loadURI(url, referrerURI);
           } else {
