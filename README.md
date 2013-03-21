@@ -8,7 +8,8 @@ Firefox 20.0 and newer.
 
 ## Installations
 
-[Dev build](https://dl.dropbox.com/u/120550/extensions/openinprivatewindow.xpi).
+* [Stable release](https://addons.mozilla.org/addon/openinprivatewindow/?src=external-home).
+* [Dev build](https://dl.dropbox.com/u/120550/extensions/openinprivatewindow.xpi).
 
 ## Screenshots
 
