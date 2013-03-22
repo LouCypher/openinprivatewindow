@@ -19,16 +19,19 @@
 
   <commandset id="mainCommandSet">
     <command id="openPrivateWindow:page"
-             oncommand="openInPrivateWindow('page', gContextMenu);"/>
+             oncommand="openInPrivateWindow('page');"/>
     <command id="openPrivateWindow:link"
-             oncommand="openInPrivateWindow('link', gContextMenu);"/>
+             oncommand="openInPrivateWindow('link');"/>
     <command id="openPrivateWindow:frame"
-             oncommand="openInPrivateWindow('frame', gContextMenu);"/>
+             oncommand="openInPrivateWindow('frame');"/>
+    <command id="openPrivateWindow:places"
+             oncommand="openInPrivateWindow('places');"/>
   </commandset>
 
   <vbox id="appmenuPrimaryPane">
     <menuitem id="appmenu-closePrivate"
               insertbefore="appmenu-quit"
+              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.exit.label;"
               accesskey="&OpenInPrivateWindow.menu.exit.accesskey;"
               oncommand="BrowserTryToCloseWindow();"/>
@@ -37,6 +40,7 @@
   <menupopup id="menu_FilePopup">
     <menuitem id="filemenu-closePrivate"
               insertbefore="menu_FileQuitItem"
+              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.exit.label;"
               accesskey="&OpenInPrivateWindow.menu.exit.accesskey;"
               oncommand="BrowserTryToCloseWindow();"/>
@@ -45,7 +49,7 @@
   <menupopup id="menu_ToolsPopup">
     <menuitem id="ToolsPopup_openinprivatewindow-options"
               insertbefore="menu_preferences"
-              class="menuitem-iconic"
+              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.options.label;"
               oncommand="BrowserOpenAddonsMgr('addons://detail/OpenInPrivateWindow%40loucypher/preferences');"/>
   </menupopup>
@@ -53,44 +57,66 @@
   <menupopup id="appmenu_customizeMenu">
     <menuitem id="appmenu_openinprivatewindow-options"
               insertafter="appmenu_preferences"
-              class="menuitem-iconic"
+              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.options.label;"
               oncommand="BrowserOpenAddonsMgr('addons://detail/OpenInPrivateWindow%40loucypher/preferences');"/>
+  </menupopup>
+
+  <menupopup id="placesContext">
+    <menuitem id="placesContext-openplacesprivatenew"
+              insertafter="placesContext_open:newwindow"
+              class="OpenInPrivateWindow"
+              label="&OpenInPrivateWindow.menu.open.placesnew.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.placesnew.accesskey;"
+              command="openPrivateWindow:places"/>
+
+    <menuitem id="placesContext-openplacesprivate"
+              insertafter="placesContext-openplacesprivatenew"
+              class="OpenInPrivateWindow"
+              label="&OpenInPrivateWindow.menu.open.places.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.places.accesskey;"
+              command="openPrivateWindow:places"/>
   </menupopup>
 
   <menupopup id="contentAreaContextMenu">
     <menuitem id="context-openpageprivatenew"
               insertafter="context-bookmarkpage"
+              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.pagenew.label;"
               accesskey="&OpenInPrivateWindow.menu.open.pagenew.accesskey;"
               command="openPrivateWindow:page"/>
 
     <menuitem id="context-openpageprivate"
               insertafter="context-openpageprivatenew"
+              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.page.label;"
               accesskey="&OpenInPrivateWindow.menu.open.page.accesskey;"
               command="openPrivateWindow:page"/>
 
     <menuitem id="context-openlinkprivate2"
               insertafter="context-openlinkprivate"
+              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.link.label;"
               accesskey="&OpenInPrivateWindow.menu.open.link.accesskey;"
               command="openPrivateWindow:link"/>
 
     <menuitem id="context-openframeprivatenew"
               insertafter="frame"
+              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.framenew.label;"
               accesskey="&OpenInPrivateWindow.menu.open.framenew.accesskey;"
               command="openPrivateWindow:frame"/>
 
     <menuitem id="context-openframeprivate"
               insertafter="frame"
+              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.frame.label;"
               accesskey="&OpenInPrivateWindow.menu.open.frame.accesskey;"
               command="openPrivateWindow:frame"/>
 
     <menuitem id="context-closeprivatewindow"
               insertafter="page-menu-separator"
+              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.exit.label;"
               accesskey="&OpenInPrivateWindow.menu.exit.accesskey;"
               oncommand="BrowserTryToCloseWindow();"/>

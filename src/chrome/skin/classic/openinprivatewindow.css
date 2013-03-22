@@ -2,9 +2,6 @@
   list-style-image: url("chrome://browser/skin/appmenu-icons.png");
   -moz-image-region: rect(0px, 80px, 16px, 64px);
 }
-#ToolsPopup_openinprivatewindow-options, #appmenu_openinprivatewindow-options,
-#context-openpageprivatenew, #context-openpageprivate,
-#context-openlinkprivate, #context-openlinkprivate2,
-#context-openframeprivatenew, #context-openframeprivate {
+.OpenInPrivateWindow {
   list-style-image: url("chrome://browser/skin/Privacy-16.png");
 }

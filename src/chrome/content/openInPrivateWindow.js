@@ -7,7 +7,7 @@
  *  - LouCypher (original code)
  */
 
-(function(winObj) {
+(function() {
 
   var gPrefService = Services.prefs.getBranch("extensions.OpenInPrivateWindow.");
 
@@ -27,25 +27,35 @@
     return PrivateBrowsingUtils.isWindowPrivate(aWindow);
   }
 
-  function openInPrivateWindow(aTarget, aContextMenu) {
-    var doc, url;
+  function openInPrivateWindow(aTarget) {
+    var doc, url, places, placesNode;
     switch (aTarget) {
       case "frame":
-        doc = aContextMenu.target.ownerDocument;
+        doc = gContextMenu.target.ownerDocument;
         url = doc.location.href;
         break;
       case "link":
-        doc = aContextMenu.target.ownerDocument;
-        url = aContextMenu.linkURL;
+        doc = gContextMenu.target.ownerDocument;
+        url = gContextMenu.linkURL;
         break;
       case "page":
         doc = gBrowser.contentDocument;
         url = gBrowser.currentURI.spec;
+        break;
+      case "places":
+        places = true;
+        placesNode = document.getElementById("placesContext")
+                             .triggerNode._placesNode;
+        doc = null;
+        url = placesNode.uri;
     }
 
-    urlSecurityCheck(url, doc.nodePrincipal);
+    doc && urlSecurityCheck(url, doc.nodePrincipal);
 
-    var referrerURI = isReferrerSend() ? doc.documentURIObject : null;
+    var characterSet = places ? null : doc.characterSet;
+    var referrerURI = places ? null
+                             : isReferrerSend() ? doc.documentURIObject
+                                                : null;
     var loadInBackground = getBoolPref("loadInBackground");
 
     if (isWindowReuse()) {
@@ -58,7 +68,7 @@
           if (isBlankPageURL(browser.currentURI.spec)) {
             win.loadURI(url, referrerURI);
           } else {
-            browser.loadOneTab(url, referrerURI, doc.characterSet, null, false);
+            browser.loadOneTab(url, referrerURI, characterSet, null, false);
           }
           if (!loadInBackground) win.focus();
           return;
@@ -67,17 +77,18 @@
       index++;
     }
 
-    openLinkIn(url, "window", { charset: doc.characterSet,
+    openLinkIn(url, "window", { charset: characterSet,
                                 referrerURI: referrerURI,
                                 private: true });
   }
 
   function showMenuIcon(aId) {
     var menuitem = document.getElementById(aId);
+    var iconic = "menuitem-iconic";
     if (getBoolPref("showMenuIcons")) {
-      menuitem.className = "menuitem-iconic";
+      menuitem.classList.add(iconic);
     } else {
-      menuitem.classList.remove("menuitem-iconic");
+      menuitem.classList.remove(iconic);
     }
   }
 
@@ -85,7 +96,7 @@
     var showExitMenu = getBoolPref("showExitPrivateMenu");
     var menuitem = document.getElementById("appmenu-closePrivate");
     var menuExit = document.getElementById("appmenu-quit");
-    menuitem.hidden = !(isWindowPrivate(winObj) && showExitMenu);
+    menuitem.hidden = !(isWindowPrivate(window) && showExitMenu);
     menuExit.hidden = !menuitem.hidden;
     showMenuIcon("appmenu-closePrivate");
   }
@@ -94,7 +105,7 @@
     var showExitMenu = getBoolPref("showExitPrivateMenu");
     var menuitem = document.getElementById("filemenu-closePrivate");
     var menuExit = document.getElementById("menu_FileQuitItem");
-    menuitem.hidden = !(isWindowPrivate(winObj) && showExitMenu);
+    menuitem.hidden = !(isWindowPrivate(window) && showExitMenu);
     menuExit.hidden = !menuitem.hidden;
     showMenuIcon("filemenu-closePrivate");
   }
@@ -113,7 +124,7 @@
     }
 
     var reuseWindow = isWindowReuse();
-    var onPrivateWindow = isWindowPrivate(winObj);
+    var onPrivateWindow = isWindowPrivate(window);
     var contextOpenLink = document.getElementById("context-openlinkprivate");
     contextOpenLink.removeAttribute("oncommand");
     contextOpenLink.setAttribute("command", "openPrivateWindow:link");
@@ -154,6 +165,18 @@
      "context-closeprivatewindow"].forEach(showMenuIcon);
   }
 
+  function initPlacesMenu(aEvent) {
+    var placesNode = aEvent.target.triggerNode._placesNode;
+    var isNotBookmarkItem = placesNode.type > 0;
+    ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
+      var id = "placesContext-" + aId;
+      showMenuIcon(id);
+      document.getElementById(id)
+              .hidden = isNotBookmarkItem || !getBoolPref("showOpenPlaces") ||
+                        (/new$/.test(id) ? isWindowReuse() : !isWindowReuse());
+    })
+  }
+
   function onLoad() {
     var appMenu = document.getElementById("appmenu-popup");
     appMenu.addEventListener("popupshowing", initAppmenu, false);
@@ -163,7 +186,7 @@
     fileMenu.addEventListener("popupshowing", initFileMenu, false);
     fileMenu.removeEventListener("popuphiding", initFileMenu, false);
 
-    ["page", "link", "frame"].forEach(function(aId) {
+    ["page", "link", "frame", "places"].forEach(function(aId) {
       document.getElementById("openPrivateWindow:" + aId)
               .openInPrivateWindow = openInPrivateWindow.bind();
     })
@@ -177,9 +200,13 @@
     var contextmenu = document.getElementById("contentAreaContextMenu");
     contextmenu.addEventListener("popupshowing", initContextMenu, false);
     contextmenu.removeEventListener("popuphiding", initContextMenu, false);
+
+    var placesMenu = document.getElementById("placesContext");
+    placesMenu.addEventListener("popupshowing", initPlacesMenu, false);
+    placesMenu.removeEventListener("popuphiding", initPlacesMenu, false);
   }
 
-  winObj.addEventListener("load", onLoad, false);
-  winObj.removeEventListener("unload", onLoad, false);
+  window.addEventListener("load", onLoad, false);
+  window.removeEventListener("unload", onLoad, false);
 
-})(window)
+})()

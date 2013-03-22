@@ -8,3 +8,4 @@ pref("extensions.OpenInPrivateWindow.showMenuIcons", true);
 pref("extensions.OpenInPrivateWindow.showOpenFrame", true);
 pref("extensions.OpenInPrivateWindow.showOpenLink", true);
 pref("extensions.OpenInPrivateWindow.showOpenPage", true);
+pref("extensions.OpenInPrivateWindow.showOpenPlaces", true);

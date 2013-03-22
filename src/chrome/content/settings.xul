@@ -29,23 +29,33 @@
 
   <setting pref="extensions.OpenInPrivateWindow.showOpenLink"
            type="bool"
-           title="&OpenInPrivateWindow.settings.showOpenLink.title;"/>
+           title="&OpenInPrivateWindow.menu.open.link.label;"
+           desc="&OpenInPrivateWindow.settings.showInMainContextMenu.desc;"/>
 
   <setting pref="extensions.OpenInPrivateWindow.showOpenPage"
            type="bool"
-           title="&OpenInPrivateWindow.settings.showOpenPage.title;"/>
+           title="&OpenInPrivateWindow.menu.open.page.label;"
+           desc="&OpenInPrivateWindow.settings.showInMainContextMenu.desc;"/>
 
   <setting pref="extensions.OpenInPrivateWindow.showOpenFrame"
            type="bool"
-           title="&OpenInPrivateWindow.settings.showOpenFrame.title;"/>
+           title="&OpenInPrivateWindow.menu.open.frame.label;"
+           desc="&OpenInPrivateWindow.settings.showInMainContextMenu.desc;"/>
+
+  <setting pref="extensions.OpenInPrivateWindow.showOpenPlaces"
+           type="bool"
+           title="&OpenInPrivateWindow.menu.open.places.label;"
+           desc="&OpenInPrivateWindow.settings.showInPlacesContextMenu.desc;"/>
 
   <setting pref="extensions.OpenInPrivateWindow.showExitPrivateContextMenu"
            type="bool"
-           title="&OpenInPrivateWindow.settings.showExitPrivateContextMenu.title;"/>
+           title="&OpenInPrivateWindow.menu.exit.label;"
+           desc="&OpenInPrivateWindow.settings.showInMainContextMenu.desc;"/>
 
   <setting pref="extensions.OpenInPrivateWindow.showExitPrivateMenu"
            type="bool"
-           title="&OpenInPrivateWindow.settings.showExitPrivateMenu.title;"/>
+           title="&OpenInPrivateWindow.menu.exit.label;"
+           desc="&OpenInPrivateWindow.settings.showInMenu.desc;"/>
 
   <setting pref="extensions.OpenInPrivateWindow.showMenuIcons"
            type="bool"
