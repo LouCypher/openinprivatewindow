@@ -18,6 +18,8 @@
   <script type="application/x-javascript" src="openInPrivateWindow.js"/>
 
   <commandset id="mainCommandSet">
+    <command id="openPrivateWindow:switchto"
+             oncommand="openNewOrSwitchToPrivateWindow();"/>
     <command id="openPrivateWindow:page"
              oncommand="openInPrivateWindow('page');"/>
     <command id="openPrivateWindow:link"
@@ -28,7 +30,19 @@
              oncommand="openInPrivateWindow('places');"/>
   </commandset>
 
+  <keyset id="mainKeyset">
+    <key id="key_privatebrowsing"
+         command="openPrivateWindow:switchto"/>
+  </keyset>
+
   <vbox id="appmenuPrimaryPane">
+    <menuitem id="appmenu_PrivateWindow"
+              insertafter="appmenu_newPrivateWindow"
+              class="OpenInPrivateWindow menuitem-iconic menuitem-iconic-tooltip"
+              label="&OpenInPrivateWindow.menu.privateWindow.label;"
+              key="key_privatebrowsing"
+              command="openPrivateWindow:switchto"/>
+
     <menuitem id="appmenu-closePrivate"
               insertbefore="appmenu-quit"
               class="OpenInPrivateWindow"

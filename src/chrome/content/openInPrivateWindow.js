@@ -11,43 +11,71 @@
 
   var gPrefService = Services.prefs.getBranch("extensions.OpenInPrivateWindow.");
 
+  function $(aId) {
+    return document.getElementById(aId);
+  }
+
   function getBoolPref(aPrefName) {
     return gPrefService.getBoolPref(aPrefName);
   }
 
-  function isWindowReuse() {
+  // Get 'Reuse Private Window' option
+  function isPrivateWindowReuse() {
     return getBoolPref("reusePrivateWindow");
   }
 
+  // Get 'Send original referrer' option
   function isReferrerSend() {
     return getBoolPref("sendReferrer");
   }
 
+  // Check if window is Private Window
   function isWindowPrivate(aWindow) {
     return PrivateBrowsingUtils.isWindowPrivate(aWindow);
+    // Return true if window is Private Window
+  }
+
+  function openNewOrSwitchToPrivateWindow() {
+    if (isPrivateWindowReuse()) { // If 'Reuse Private Window' option is on
+      if (isWindowPrivate(window)) { // If current window is Private Window
+                                     // open a new tab
+        gBrowser.selectedTab = gBrowser.addTab("about:privatebrowsing");
+        return;
+      }
+      var index = 1;
+      var em = Services.wm.getEnumerator("navigator:browser");
+      while (em.hasMoreElements()) {
+        let win = em.getNext();
+        if (isWindowPrivate(win)) { // If win is Private Window
+          win.focus();              // focus window
+          return;
+        }
+      }
+      index++;
+    }
+    OpenBrowserWindow({private: true}); // Open new Private Window
   }
 
   function openInPrivateWindow(aTarget) {
     var doc, url, places, placesNode;
     switch (aTarget) {
-      case "frame":
-        doc = gContextMenu.target.ownerDocument;
-        url = doc.location.href;
+      case "frame": // The frame element you right click on
+        doc = gContextMenu.target.ownerDocument; // document object of the frame
+        url = doc.location.href; // URL of the frame
         break;
-      case "link":
-        doc = gContextMenu.target.ownerDocument;
-        url = gContextMenu.linkURL;
+      case "link": // The link element you right click on
+        doc = gContextMenu.target.ownerDocument; // document object of the link
+        url = gContextMenu.linkURL; // link href
         break;
-      case "page":
-        doc = gBrowser.contentDocument;
-        url = gBrowser.currentURI.spec;
+      case "page": // The page you right click on
+        doc = gBrowser.contentDocument; // document object of the page
+        url = gBrowser.currentURI.spec; // URL of the page
         break;
-      case "places":
+      case "places": // Bookmark item you right click on
         places = true;
-        placesNode = document.getElementById("placesContext")
-                             .triggerNode._placesNode;
+        placesNode = $("placesContext").triggerNode._placesNode;
         doc = null;
-        url = placesNode.uri;
+        url = placesNode.uri; // Bookmark URL
     }
 
     doc && urlSecurityCheck(url, doc.nodePrincipal);
@@ -58,16 +86,16 @@
                                                 : null;
     var loadInBackground = getBoolPref("loadInBackground");
 
-    if (isWindowReuse()) {
+    if (isPrivateWindowReuse()) { // If 'Reuse Private Window' option is on
       var index = 1;
       var em = Services.wm.getEnumerator("navigator:browser");
       while (em.hasMoreElements()) {
         let win = em.getNext();
-        if (isWindowPrivate(win)) {
-          var browser = win.gBrowser;
-          if (isBlankPageURL(browser.currentURI.spec)) {
-            win.loadURI(url, referrerURI);
-          } else {
+        if (isWindowPrivate(win)) { // If window is Private Window
+          var browser = win.gBrowser; // Browser element of window
+          if (isBlankPageURL(browser.currentURI.spec)) { // if blank tab on window
+            win.loadURI(url, referrerURI);               // load URL in active tab
+          } else { // load URL in new tab
             browser.loadOneTab(url, referrerURI, characterSet, null, false);
           }
           if (!loadInBackground) win.focus();
@@ -77,13 +105,14 @@
       index++;
     }
 
+    // If 'Reuse Private Window' option is off, open URL in new Private Window
     openLinkIn(url, "window", { charset: characterSet,
                                 referrerURI: referrerURI,
                                 private: true });
   }
 
   function showMenuIcon(aId) {
-    var menuitem = document.getElementById(aId);
+    var menuitem = $(aId);
     var iconic = "menuitem-iconic";
     if (getBoolPref("showMenuIcons")) {
       menuitem.classList.add(iconic);
@@ -94,17 +123,20 @@
 
   function initAppmenu() {
     var showExitMenu = getBoolPref("showExitPrivateMenu");
-    var menuitem = document.getElementById("appmenu-closePrivate");
-    var menuExit = document.getElementById("appmenu-quit");
-    menuitem.hidden = !(isWindowPrivate(window) && showExitMenu);
-    menuExit.hidden = !menuitem.hidden;
+    $("appmenu-closePrivate").hidden = !(isWindowPrivate(window) &&
+                                         showExitMenu);
+    $("appmenu-quit").hidden = !$("appmenu-closePrivate").hidden;
+    $("appmenu_PrivateWindow").hidden = !isPrivateWindowReuse() ||
+                                        isWindowPrivate(window);
+    $("appmenu_newPrivateWindow").hidden = isPrivateWindowReuse() &&
+                                           !isWindowPrivate(window);
     showMenuIcon("appmenu-closePrivate");
   }
 
   function initFileMenu() {
     var showExitMenu = getBoolPref("showExitPrivateMenu");
-    var menuitem = document.getElementById("filemenu-closePrivate");
-    var menuExit = document.getElementById("menu_FileQuitItem");
+    var menuitem = $("filemenu-closePrivate");
+    var menuExit = $("menu_FileQuitItem");
     menuitem.hidden = !(isWindowPrivate(window) && showExitMenu);
     menuExit.hidden = !menuitem.hidden;
     showMenuIcon("filemenu-closePrivate");
@@ -123,9 +155,9 @@
                           (mailtoHandler.preferredApplicationHandler instanceof Ci.nsIWebHandlerApp));
     }
 
-    var reuseWindow = isWindowReuse();
+    var reuseWindow = isPrivateWindowReuse();
     var onPrivateWindow = isWindowPrivate(window);
-    var contextOpenLink = document.getElementById("context-openlinkprivate");
+    var contextOpenLink = $("context-openlinkprivate");
     contextOpenLink.removeAttribute("oncommand");
     contextOpenLink.setAttribute("command", "openPrivateWindow:link");
 
@@ -171,37 +203,40 @@
     ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
       var id = "placesContext-" + aId;
       showMenuIcon(id);
-      document.getElementById(id)
-              .hidden = isNotBookmarkItem || !getBoolPref("showOpenPlaces") ||
-                        (/new$/.test(id) ? isWindowReuse() : !isWindowReuse());
+      $(id).hidden = isNotBookmarkItem || !getBoolPref("showOpenPlaces") ||
+                     (/new$/.test(id) ? isPrivateWindowReuse()
+                                      : !isPrivateWindowReuse());
     })
   }
 
   function onLoad() {
-    var appMenu = document.getElementById("appmenu-popup");
+    var appMenu = $("appmenu-popup");
     appMenu.addEventListener("popupshowing", initAppmenu, false);
     appMenu.removeEventListener("popuphiding", initAppmenu, false);
 
-    var fileMenu = document.getElementById("menu_FilePopup");
+    var fileMenu = $("menu_FilePopup");
     fileMenu.addEventListener("popupshowing", initFileMenu, false);
     fileMenu.removeEventListener("popuphiding", initFileMenu, false);
 
+    $("openPrivateWindow:switchto").
+    openNewOrSwitchToPrivateWindow = openNewOrSwitchToPrivateWindow.bind();
+
     ["page", "link", "frame", "places"].forEach(function(aId) {
-      document.getElementById("openPrivateWindow:" + aId)
-              .openInPrivateWindow = openInPrivateWindow.bind();
+      $("openPrivateWindow:" + aId).
+      openInPrivateWindow = openInPrivateWindow.bind();
     })
 
     var separator = document.querySelector("#context-openframe + menuseparator");
     ["openframeprivatenew", "openframeprivate"].forEach(function(aId) {
-      var menuitem = document.getElementById("context-" + aId);
+      var menuitem = $("context-" + aId);
       separator.parentNode.insertBefore(menuitem, separator);
     })
 
-    var contextmenu = document.getElementById("contentAreaContextMenu");
+    var contextmenu = $("contentAreaContextMenu");
     contextmenu.addEventListener("popupshowing", initContextMenu, false);
     contextmenu.removeEventListener("popuphiding", initContextMenu, false);
 
-    var placesMenu = document.getElementById("placesContext");
+    var placesMenu = $("placesContext");
     placesMenu.addEventListener("popupshowing", initPlacesMenu, false);
     placesMenu.removeEventListener("popuphiding", initPlacesMenu, false);
   }

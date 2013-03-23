@@ -1,3 +1,4 @@
+<!ENTITY OpenInPrivateWindow.menu.privateWindow.label       "Private Window">
 <!ENTITY OpenInPrivateWindow.menu.exit.label                "Exit Private Window">
 <!ENTITY OpenInPrivateWindow.menu.exit.accesskey            "x">
 <!ENTITY OpenInPrivateWindow.menu.open.link.label           "Open Link in Private Window">
