@@ -1,0 +1,29 @@
+<!ENTITY OpenInPrivateWindow.menu.privateWindow.label       "Jendela Penyamaran">
+<!ENTITY OpenInPrivateWindow.menu.exit.label                "Tutup Jendela Penyamaran">
+<!ENTITY OpenInPrivateWindow.menu.exit.accesskey            "x">
+<!ENTITY OpenInPrivateWindow.menu.open.link.label           "Buka Tautan di Jendela Penyamaran">
+<!ENTITY OpenInPrivateWindow.menu.open.link.accesskey       "P">
+<!ENTITY OpenInPrivateWindow.menu.open.pagenew.label        "Buka Laman di Jendela Penyamaran Baru">
+<!ENTITY OpenInPrivateWindow.menu.open.pagenew.accesskey    "P">
+<!ENTITY OpenInPrivateWindow.menu.open.page.label           "Buka Laman di Jendela Penyamaran">
+<!ENTITY OpenInPrivateWindow.menu.open.page.accesskey       "P">
+<!ENTITY OpenInPrivateWindow.menu.open.framenew.label       "Buka Bingkai di Jendela Penyamaran Baru">
+<!ENTITY OpenInPrivateWindow.menu.open.framenew.accesskey   "P">
+<!ENTITY OpenInPrivateWindow.menu.open.frame.label          "Buka Bingkai di Jendela Penyamaran">
+<!ENTITY OpenInPrivateWindow.menu.open.frame.accesskey      "P">
+<!ENTITY OpenInPrivateWindow.menu.open.placesnew.label      "Buka di Jendela Penyamaran Baru">
+<!ENTITY OpenInPrivateWindow.menu.open.placesnew.accesskey  "a">
+<!ENTITY OpenInPrivateWindow.menu.open.places.label         "Buka di Jendela Penyamaran">
+<!ENTITY OpenInPrivateWindow.menu.open.places.accesskey     "a">
+<!ENTITY OpenInPrivateWindow.menu.options.label             "Buka Pilihan Jendela Penyamaran">
+<!ENTITY OpenInPrivateWindow.menu.options.accesskey         "J">
+<!ENTITY OpenInPrivateWindow.settings.reusePrivateWindow.title          "Gunakan kembali Jendela Penyamaran">
+<!ENTITY OpenInPrivateWindow.settings.reusePrivateWindow.desc           "Gunakan buka Jendela Penyamaran baru yang sudah terbuka.">
+<!ENTITY OpenInPrivateWindow.settings.sendReferrer.title                "Kirim perujuk asli">
+<!ENTITY OpenInPrivateWindow.settings.sendReferrer.desc                 "Kirim perujuk asli ketika saya membuka sebuah alamat di Jendela Penyamaran">
+<!ENTITY OpenInPrivateWindow.settings.loadInBackground.title            "Memuat Jendela Penyamaran di latar belakang">
+<!ENTITY OpenInPrivateWindow.settings.loadInBackground.desc             "Ketika saya membuka sebuah alamat di Jendela Penyamaran, jangan langsung pindah ke jendela tersebut. Pilihan ini hanya bekerja jika pilihan gunakan kembali Jendela Penyamaran dihidupkan.">
+<!ENTITY OpenInPrivateWindow.settings.showInMenu.desc                   "Tampilkan pada menu aplikasi.">
+<!ENTITY OpenInPrivateWindow.settings.showInMainContextMenu.desc        "Tampilkan pada menu konteks utama.">
+<!ENTITY OpenInPrivateWindow.settings.showInPlacesContextMenu.desc      "Tampilkan pada menu konteks markah.">
+<!ENTITY OpenInPrivateWindow.settings.showMenuIcons.title               "Tampilkan ikon pada menu.">
