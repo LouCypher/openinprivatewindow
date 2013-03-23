@@ -1,4 +1,5 @@
 pref("extensions.OpenInPrivateWindow@loucypher.description", "chrome://openinprivatewindow/locale/openinprivatewindow.properties");
+pref("extensions.OpenInPrivateWindow.firstRun", true);
 pref("extensions.OpenInPrivateWindow.loadInBackground", false);
 pref("extensions.OpenInPrivateWindow.reusePrivateWindow", false);
 pref("extensions.OpenInPrivateWindow.sendReferrer", true);

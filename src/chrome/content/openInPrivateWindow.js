@@ -209,6 +209,21 @@
     })
   }
 
+  function contribute(aAddon) {
+    var url = aAddon.contributionURL;
+    if (!url) return;
+    url = url.replace(/developers\?/, "contribute/installed?");
+    var req = new XMLHttpRequest();
+    req.open("GET", url, true);
+    req.onreadystatechange = function (aEvent) {
+      if ((req.readyState == 4) && (req.status == 200)) {
+        prefs.setBoolPref("firstRun", false);
+        switchToTabHavingURI(url, true);
+      }
+    }
+    req.send(null);
+  }
+
   function onLoad() {
     var appMenu = $("appmenu-popup");
     appMenu.addEventListener("popupshowing", initAppmenu, false);
@@ -239,6 +254,10 @@
     var placesMenu = $("placesContext");
     placesMenu.addEventListener("popupshowing", initPlacesMenu, false);
     placesMenu.removeEventListener("popuphiding", initPlacesMenu, false);
+
+    if (getBoolPref("firstRun") && navigator.onLine) {
+      AddonManager.getAddonByID("OpenInPrivateWindow@loucypher", contribute);
+    }
   }
 
   window.addEventListener("load", onLoad, false);
