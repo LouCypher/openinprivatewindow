@@ -4,12 +4,32 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>OpenInPrivateWindow@loucypher</em:id>
     <em:type>2</em:type>
-    <!--em:unpack>true</em:unpack-->
+    <em:unpack>false</em:unpack>
     <em:name>Open in Private Window</em:name>
     <em:version>0.2a4</em:version>
     <em:description>Add more context menu items and options to open a URL in Firefox Private Window.</em:description>
     <em:creator>LouCypher</em:creator>
     <em:homepageURL>http://loucypher.github.com/openinprivatewindow</em:homepageURL>
+    <em:localized>
+      <Description>
+        <em:locale>en-US</em:locale>
+        <em:name>Open in Private Window</em:name>
+        <em:description>Add more context menu items and options to open a URL in Firefox Private Window.</em:description>
+        <em:creator>LouCypher</em:creator>
+        <em:homepageURL>http://loucypher.github.com/openinprivatewindow/</em:homepageURL>
+      </Description>
+    </em:localized>
+    <em:localized>
+      <Description>
+        <em:locale>id</em:locale>
+        <em:name>Buka di Jendela Penyamaran</em:name>
+        <em:description>Menambahkan beberapa menu pada konteks menu untuk membuka URL di Jendela Penyamaran Firefox.</em:description>
+        <em:creator>LouCypher</em:creator>
+        <em:homepageURL>http://loucypher.github.com/openinprivatewindow/</em:homepageURL>
+      </Description>
+    </em:localized>
+    <em:iconURL>chrome://browser/skin/Privacy-48.png</em:iconURL>
+    <em:icon64URL>chrome://browser/skin/Privacy-48.png</em:icon64URL>
     <em:optionsURL>chrome://openinprivatewindow/content/settings.xul</em:optionsURL>
     <em:optionsType>2</em:optionsType>
     <em:targetApplication>
