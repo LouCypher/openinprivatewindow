@@ -1,4 +1,4 @@
-#appmenu-closePrivate, #filemenu-closePrivate, #context-closeprivatewindow {
+#appmenu-closePrivate, #context-closeprivatewindow {
   list-style-image: url("chrome://browser/skin/appmenu-icons.png");
   -moz-image-region: rect(0px, 80px, 16px, 64px);
 }

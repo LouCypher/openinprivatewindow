@@ -18,21 +18,22 @@
   <script type="application/x-javascript" src="openInPrivateWindow.js"/>
 
   <commandset id="mainCommandSet">
-    <command id="openPrivateWindow:switchto"
+    <command id="OpenPrivateWindow:switchto"
              oncommand="openNewOrSwitchToPrivateWindow();"/>
-    <command id="openPrivateWindow:page"
+    <command id="OpenPrivateWindow:options"
+             oncommand="openPrivateWindowOptions();"/>
+    <command id="OpenPrivateWindow:page"
              oncommand="openInPrivateWindow('page');"/>
-    <command id="openPrivateWindow:link"
+    <command id="OpenPrivateWindow:link"
              oncommand="openInPrivateWindow('link');"/>
-    <command id="openPrivateWindow:frame"
+    <command id="OpenPrivateWindow:frame"
              oncommand="openInPrivateWindow('frame');"/>
-    <command id="openPrivateWindow:places"
+    <command id="OpenPrivateWindow:places"
              oncommand="openInPrivateWindow('places');"/>
   </commandset>
 
   <keyset id="mainKeyset">
-    <key id="key_privatebrowsing"
-         command="openPrivateWindow:switchto"/>
+    <key id="key_privatebrowsing" command="OpenPrivateWindow:switchto"/>
   </keyset>
 
   <vbox id="appmenuPrimaryPane">
@@ -41,20 +42,25 @@
               class="OpenInPrivateWindow menuitem-iconic menuitem-iconic-tooltip"
               label="&OpenInPrivateWindow.menu.privateWindow.label;"
               key="key_privatebrowsing"
-              command="openPrivateWindow:switchto"/>
+              command="OpenPrivateWindow:switchto"/>
 
     <menuitem id="appmenu-closePrivate"
               insertbefore="appmenu-quit"
-              class="OpenInPrivateWindow"
+              class="menuitem-iconic"
               label="&OpenInPrivateWindow.menu.exit.label;"
               accesskey="&OpenInPrivateWindow.menu.exit.accesskey;"
               oncommand="BrowserTryToCloseWindow();"/>
   </vbox>
 
   <menupopup id="menu_FilePopup">
+    <menuitem id="filemenu_PrivateWindow"
+              insertafter="menu_newPrivateWindow"
+              label="&OpenInPrivateWindow.menu.privateWindow.label;"
+              key="key_privatebrowsing"
+              command="OpenPrivateWindow:switchto"/>
+
     <menuitem id="filemenu-closePrivate"
               insertbefore="menu_FileQuitItem"
-              class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.exit.label;"
               accesskey="&OpenInPrivateWindow.menu.exit.accesskey;"
               oncommand="BrowserTryToCloseWindow();"/>
@@ -63,17 +69,17 @@
   <menupopup id="menu_ToolsPopup">
     <menuitem id="ToolsPopup_openinprivatewindow-options"
               insertbefore="menu_preferences"
-              class="OpenInPrivateWindow"
+              class="OpenInPrivateWindow menuitem-iconic"
               label="&OpenInPrivateWindow.menu.options.label;"
-              oncommand="BrowserOpenAddonsMgr('addons://detail/OpenInPrivateWindow%40loucypher/preferences');"/>
+              command="OpenPrivateWindow:options"/>
   </menupopup>
 
   <menupopup id="appmenu_customizeMenu">
     <menuitem id="appmenu_openinprivatewindow-options"
               insertafter="appmenu_preferences"
-              class="OpenInPrivateWindow"
+              class="OpenInPrivateWindow menuitem-iconic"
               label="&OpenInPrivateWindow.menu.options.label;"
-              oncommand="BrowserOpenAddonsMgr('addons://detail/OpenInPrivateWindow%40loucypher/preferences');"/>
+              command="OpenPrivateWindow:options"/>
   </menupopup>
 
   <menupopup id="placesContext">
@@ -82,14 +88,14 @@
               class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.placesnew.label;"
               accesskey="&OpenInPrivateWindow.menu.open.placesnew.accesskey;"
-              command="openPrivateWindow:places"/>
+              command="OpenPrivateWindow:places"/>
 
     <menuitem id="placesContext-openplacesprivate"
               insertafter="placesContext-openplacesprivatenew"
               class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.places.label;"
               accesskey="&OpenInPrivateWindow.menu.open.places.accesskey;"
-              command="openPrivateWindow:places"/>
+              command="OpenPrivateWindow:places"/>
   </menupopup>
 
   <menupopup id="contentAreaContextMenu">
@@ -98,35 +104,35 @@
               class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.pagenew.label;"
               accesskey="&OpenInPrivateWindow.menu.open.pagenew.accesskey;"
-              command="openPrivateWindow:page"/>
+              command="OpenPrivateWindow:page"/>
 
     <menuitem id="context-openpageprivate"
               insertafter="context-openpageprivatenew"
               class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.page.label;"
               accesskey="&OpenInPrivateWindow.menu.open.page.accesskey;"
-              command="openPrivateWindow:page"/>
+              command="OpenPrivateWindow:page"/>
 
     <menuitem id="context-openlinkprivate2"
               insertafter="context-openlinkprivate"
               class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.link.label;"
               accesskey="&OpenInPrivateWindow.menu.open.link.accesskey;"
-              command="openPrivateWindow:link"/>
+              command="OpenPrivateWindow:link"/>
 
     <menuitem id="context-openframeprivatenew"
               insertafter="frame"
               class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.framenew.label;"
               accesskey="&OpenInPrivateWindow.menu.open.framenew.accesskey;"
-              command="openPrivateWindow:frame"/>
+              command="OpenPrivateWindow:frame"/>
 
     <menuitem id="context-openframeprivate"
               insertafter="frame"
               class="OpenInPrivateWindow"
               label="&OpenInPrivateWindow.menu.open.frame.label;"
               accesskey="&OpenInPrivateWindow.menu.open.frame.accesskey;"
-              command="openPrivateWindow:frame"/>
+              command="OpenPrivateWindow:frame"/>
 
     <menuitem id="context-closeprivatewindow"
               insertafter="page-menu-separator"

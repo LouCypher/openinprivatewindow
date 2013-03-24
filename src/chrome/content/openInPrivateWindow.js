@@ -9,11 +9,8 @@
 
 (function() {
 
+  const kAddonId = "OpenInPrivateWindow@loucypher";
   var gPrefService = Services.prefs.getBranch("extensions.OpenInPrivateWindow.");
-
-  function $(aId) {
-    return document.getElementById(aId);
-  }
 
   function getBoolPref(aPrefName) {
     return gPrefService.getBoolPref(aPrefName);
@@ -35,6 +32,15 @@
     // Return true if window is Private Window
   }
 
+  function isBlankPageURL(aURL) {
+    return aURL == "about:blank" || "about:privatebrowsing"
+                                 || aURL == BROWSER_NEW_TAB_URL;
+  }
+
+  function $(aId) {
+    return document.getElementById(aId);
+  }
+
   function openNewOrSwitchToPrivateWindow() {
     if (isPrivateWindowReuse()) { // If 'Reuse Private Window' option is on
       if (isWindowPrivate(window)) { // If current window is Private Window
@@ -53,6 +59,7 @@
       }
       index++;
     }
+    // If 'Reuse Private Window' option is off
     OpenBrowserWindow({private: true}); // Open new Private Window
   }
 
@@ -121,6 +128,28 @@
     }
   }
 
+  function contribute() {
+    AddonManager.getAddonByID(kAddonId, function(aAddon) {
+      var url = aAddon.contributionURL;
+      if (!url) return;
+      url = url.replace(/developers\?/, "contribute/installed?");
+      var req = new XMLHttpRequest();
+      req.open("GET", url, true);
+      req.onreadystatechange = function (aEvent) {
+        if ((req.readyState == 4) && (req.status == 200)) {
+          gPrefService.setBoolPref("firstRun", false);
+          switchToTabHavingURI(url, true);
+        }
+      }
+      req.send(null);
+    })
+  }
+
+  function openPrivateWindowOptions() {
+    BrowserOpenAddonsMgr("addons://detail/" + encodeURIComponent(kAddonId) +
+                         "/preferences");
+  }
+
   function initAppmenu() {
     var showExitMenu = getBoolPref("showExitPrivateMenu");
     $("appmenu-closePrivate").hidden = !(isWindowPrivate(window) &&
@@ -128,18 +157,21 @@
     $("appmenu-quit").hidden = !$("appmenu-closePrivate").hidden;
     $("appmenu_PrivateWindow").hidden = !isPrivateWindowReuse() ||
                                         isWindowPrivate(window);
-    $("appmenu_newPrivateWindow").hidden = isPrivateWindowReuse() &&
-                                           !isWindowPrivate(window);
-    showMenuIcon("appmenu-closePrivate");
+    $("appmenu_newPrivateWindow").hidden = true;
   }
 
   function initFileMenu() {
     var showExitMenu = getBoolPref("showExitPrivateMenu");
-    var menuitem = $("filemenu-closePrivate");
-    var menuExit = $("menu_FileQuitItem");
-    menuitem.hidden = !(isWindowPrivate(window) && showExitMenu);
-    menuExit.hidden = !menuitem.hidden;
-    showMenuIcon("filemenu-closePrivate");
+    $("filemenu-closePrivate").hidden = !(isWindowPrivate(window) && showExitMenu);
+    $("menu_FileQuitItem").hidden = !$("filemenu-closePrivate").hidden;
+    $("appmenu_PrivateWindow").hidden = !isPrivateWindowReuse() ||
+                                        isWindowPrivate(window);
+    $("appmenu_newPrivateWindow").hidden = isPrivateWindowReuse() &&
+                                           !isWindowPrivate(window);
+    $("filemenu_PrivateWindow").hidden = !isPrivateWindowReuse() ||
+                                         isWindowPrivate(window);
+    $("menu_newPrivateWindow").hidden = isPrivateWindowReuse() &&
+                                        !isWindowPrivate(window);
   }
 
   function initContextMenu(aEvent) {
@@ -159,7 +191,7 @@
     var onPrivateWindow = isWindowPrivate(window);
     var contextOpenLink = $("context-openlinkprivate");
     contextOpenLink.removeAttribute("oncommand");
-    contextOpenLink.setAttribute("command", "openPrivateWindow:link");
+    contextOpenLink.setAttribute("command", "OpenPrivateWindow:link");
 
     GX.showItem("context-openlinkprivate",
                 getBoolPref("showOpenLink") && !reuseWindow && 
@@ -209,21 +241,6 @@
     })
   }
 
-  function contribute(aAddon) {
-    var url = aAddon.contributionURL;
-    if (!url) return;
-    url = url.replace(/developers\?/, "contribute/installed?");
-    var req = new XMLHttpRequest();
-    req.open("GET", url, true);
-    req.onreadystatechange = function (aEvent) {
-      if ((req.readyState == 4) && (req.status == 200)) {
-        prefs.setBoolPref("firstRun", false);
-        switchToTabHavingURI(url, true);
-      }
-    }
-    req.send(null);
-  }
-
   function onLoad() {
     var appMenu = $("appmenu-popup");
     if (appMenu) {
@@ -235,11 +252,14 @@
     fileMenu.addEventListener("popupshowing", initFileMenu, false);
     fileMenu.removeEventListener("popuphiding", initFileMenu, false);
 
-    $("openPrivateWindow:switchto").
+    $("OpenPrivateWindow:switchto").
     openNewOrSwitchToPrivateWindow = openNewOrSwitchToPrivateWindow.bind();
 
+    $("OpenPrivateWindow:options").
+    openPrivateWindowOptions = openPrivateWindowOptions.bind();
+
     ["page", "link", "frame", "places"].forEach(function(aId) {
-      $("openPrivateWindow:" + aId).
+      $("OpenPrivateWindow:" + aId).
       openInPrivateWindow = openInPrivateWindow.bind();
     })
 
@@ -257,9 +277,8 @@
     placesMenu.addEventListener("popupshowing", initPlacesMenu, false);
     placesMenu.removeEventListener("popuphiding", initPlacesMenu, false);
 
-    if (getBoolPref("firstRun") && navigator.onLine) {
-      AddonManager.getAddonByID("OpenInPrivateWindow@loucypher", contribute);
-    }
+    getBoolPref("firstRun") && navigator.onLine
+                            && !isWindowPrivate(window) && contribute();
   }
 
   window.addEventListener("load", onLoad, false);
