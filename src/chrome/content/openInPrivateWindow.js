@@ -226,8 +226,10 @@
 
   function onLoad() {
     var appMenu = $("appmenu-popup");
-    appMenu.addEventListener("popupshowing", initAppmenu, false);
-    appMenu.removeEventListener("popuphiding", initAppmenu, false);
+    if (appMenu) {
+      appMenu.addEventListener("popupshowing", initAppmenu, false);
+      appMenu.removeEventListener("popuphiding", initAppmenu, false);
+    }
 
     var fileMenu = $("menu_FilePopup");
     fileMenu.addEventListener("popupshowing", initFileMenu, false);
