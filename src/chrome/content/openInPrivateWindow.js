@@ -175,18 +175,27 @@
                                         !isWindowPrivate(window);
   }
 
+  function isSchemeInternal(aSchemeURL) {
+    var isSchemeInternal = false;
+    var schemeHandler = Cc["@mozilla.org/uriloader/external-protocol-service;1"].
+                        getService(Ci.nsIExternalProtocolService).
+                        getProtocolHandlerInfo(aSchemeURL);
+    isSchemeInternal = (!schemeHandler.alwaysAskBeforeHandling &&
+                        schemeHandler.preferredAction == Ci.nsIHandlerInfo.useHelperApp &&
+                        (schemeHandler.preferredApplicationHandler instanceof Ci.nsIWebHandlerApp));
+    return isSchemeInternal;
+  }
+
+  function isValidScheme(aURL) {
+    var valid = /^(https?|file|data|chrome|about):/.test(aURL);
+    if (/^(mailto|irc):/.test(aURL)) {
+      valid = isSchemeInternal(aURL.match(/^[a-z-0-9]+/));
+    }
+    return valid;
+  }
+
   function initContextMenu(aEvent) {
     var GX = gContextMenu;
-
-    var isMailtoInternal = false;
-    if (GX.onMailtoLink) {
-      var mailtoHandler = Cc["@mozilla.org/uriloader/external-protocol-service;1"].
-                          getService(Ci.nsIExternalProtocolService).
-                          getProtocolHandlerInfo("mailto");
-      isMailtoInternal = (!mailtoHandler.alwaysAskBeforeHandling &&
-                          mailtoHandler.preferredAction == Ci.nsIHandlerInfo.useHelperApp &&
-                          (mailtoHandler.preferredApplicationHandler instanceof Ci.nsIWebHandlerApp));
-    }
 
     var reuseWindow = isPrivateWindowReuse();
     var onPrivateWindow = isWindowPrivate(window);
@@ -196,11 +205,11 @@
 
     GX.showItem("context-openlinkprivate",
                 getBoolPref("showOpenLink") && !reuseWindow && 
-                (GX.onSaveableLink || isMailtoInternal || GX.onPlainTextLink));
+                (isValidScheme(GX.linkURL) || GX.onPlainTextLink));
 
     GX.showItem("context-openlinkprivate2",
                 getBoolPref("showOpenLink") && !onPrivateWindow && reuseWindow &&
-                (GX.onSaveableLink || isMailtoInternal || GX.onPlainTextLink));
+                (isValidScheme(GX.linkURL) || GX.onPlainTextLink));
 
     GX.showItem("context-openpageprivatenew",
                 getBoolPref("showOpenPage") && !reuseWindow &&
@@ -236,7 +245,8 @@
     ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
       var id = "placesContext-" + aId;
       showMenuIcon(id);
-      $(id).hidden = isNotBookmarkItem || !getBoolPref("showOpenPlaces") ||
+      $(id).hidden = isNotBookmarkItem || !isValidScheme(placesNode.uri) ||
+                     !getBoolPref("showOpenPlaces") ||
                      (/new$/.test(id) ? isPrivateWindowReuse()
                                       : !isPrivateWindowReuse());
     })

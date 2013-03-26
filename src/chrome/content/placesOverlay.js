@@ -64,7 +64,6 @@
       }
       index++;
     }
-
     // If 'Reuse Private Window' option is off, open URL in new Private Window
     openLinkIn(url, "window", { private: true });
   }
@@ -79,13 +78,35 @@
     }
   }
 
+  function isSchemeInternal(aSchemeURL) {
+    var isSchemeInternal = false;
+    var schemeHandler = Cc["@mozilla.org/uriloader/external-protocol-service;1"].
+                        getService(Ci.nsIExternalProtocolService).
+                        getProtocolHandlerInfo(aSchemeURL);
+    isSchemeInternal = (!schemeHandler.alwaysAskBeforeHandling &&
+                        schemeHandler.preferredAction == Ci.nsIHandlerInfo.useHelperApp &&
+                        (schemeHandler.preferredApplicationHandler instanceof Ci.nsIWebHandlerApp));
+    return isSchemeInternal;
+  }
+
+  function isValidScheme(aURL) {
+    var valid = /^(https?|file|data|chrome|about):/.test(aURL);
+    if (/^(mailto|irc):/.test(aURL)) {
+      valid = isSchemeInternal(aURL.match(/^[a-z-0-9]+/));
+    }
+    return valid;
+  }
+
   function initPlacesMenu(aEvent) {
-    var placesNode = PlacesUIUtils.getViewForNode(aEvent.target.triggerNode).selectedNode;
+    var placesNode = PlacesUIUtils.getViewForNode(aEvent.target.triggerNode)
+                                  .selectedNode;
     var isNotBookmarkItem = placesNode.type > 0;
+
     ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
       var id = "placesContext-" + aId;
       showMenuIcon(id);
-      $(id).hidden = isNotBookmarkItem || !getBoolPref("showOpenPlaces") ||
+      $(id).hidden = isNotBookmarkItem || !isValidScheme(placesNode.uri) ||
+                     !getBoolPref("showOpenPlaces") ||
                      (/new$/.test(id) ? isPrivateWindowReuse()
                                       : !isPrivateWindowReuse());
     })
