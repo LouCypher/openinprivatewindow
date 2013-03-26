@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+    Contributor(s):
+    - LouCypher (original code)
+-->
+
+<?xml-stylesheet href="../skin/"?>
+
+<!DOCTYPE overlay SYSTEM "../locale/">
+
+<overlay id="OpenPrivateWindow-sidebarOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript" src="placesOverlay.js"/>
+  <!--
+  <script type="application/javascript"
+          src="chrome://inspector/content/hooks.js"/>
+  -->
+
+  <commandset id="placesCommands">
+    <command id="OpenPrivateWindow:places"
+             oncommand="openPlacesInPrivateWindow(event);"/>
+  </commandset>
+
+  <menupopup id="placesContext">
+    <menuitem id="placesContext-openplacesprivatenew"
+              insertafter="placesContext_open:newwindow"
+              class="OpenInPrivateWindow"
+              label="&OpenInPrivateWindow.menu.open.placesnew.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.placesnew.accesskey;"
+              command="OpenPrivateWindow:places"/>
+
+    <menuitem id="placesContext-openplacesprivate"
+              insertafter="placesContext-openplacesprivatenew"
+              class="OpenInPrivateWindow"
+              label="&OpenInPrivateWindow.menu.open.places.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.places.accesskey;"
+              command="OpenPrivateWindow:places"/>
+  </menupopup>
+
+</overlay>

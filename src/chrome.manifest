@@ -2,4 +2,6 @@ content   openinprivatewindow                     chrome/content/
 skin      openinprivatewindow   classic/1.0       chrome/skin/classic/
 locale    openinprivatewindow   en-US             chrome/locale/en-US/
 locale    openinprivatewindow   id                chrome/locale/id/
-overlay   chrome://browser/content/browser.xul    chrome://openinprivatewindow/content/browserOverlay.xul
+overlay   chrome://browser/content/browser.xul                    chrome://openinprivatewindow/content/browserOverlay.xul
+overlay   chrome://browser/content/bookmarks/bookmarksPanel.xul   chrome://openinprivatewindow/content/placesOverlay.xul
+overlay   chrome://browser/content/history/history-panel.xul      chrome://openinprivatewindow/content/placesOverlay.xul
