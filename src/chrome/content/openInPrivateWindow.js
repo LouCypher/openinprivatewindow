@@ -188,7 +188,7 @@
 
   function isValidScheme(aURL) {
     var valid = /^(https?|file|data|chrome|about):/.test(aURL);
-    if (/^(mailto|irc):/.test(aURL)) {
+    if (/^(mailto|ircs?):/.test(aURL)) {
       valid = isSchemeInternal(aURL.match(/^[a-z-0-9]+/));
     }
     return valid;
