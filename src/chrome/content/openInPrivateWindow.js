@@ -33,8 +33,9 @@
   }
 
   function isBlankPageURL(aURL) {
-    return aURL == "about:blank" || "about:privatebrowsing"
-                                 || aURL == BROWSER_NEW_TAB_URL;
+    return aURL == "about:blank" ||
+           aURL == "about:privatebrowsing" ||
+           aURL == BROWSER_NEW_TAB_URL;
   }
 
   function $(aId) {
