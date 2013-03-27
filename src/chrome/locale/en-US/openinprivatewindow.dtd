@@ -25,5 +25,5 @@
 <!ENTITY OpenInPrivateWindow.settings.loadInBackground.desc             "When I open a URL in Private Window, don't switch to it. This option only works on reuse Private Window.">
 <!ENTITY OpenInPrivateWindow.settings.showInMenu.desc                   "Show in app menu">
 <!ENTITY OpenInPrivateWindow.settings.showInMainContextMenu.desc        "Show in main context menu">
-<!ENTITY OpenInPrivateWindow.settings.showInPlacesContextMenu.desc      "Show in bookmarks context menu">
+<!ENTITY OpenInPrivateWindow.settings.showInPlacesContextMenu.desc      "Show in bookmarks &amp; history context menu">
 <!ENTITY OpenInPrivateWindow.settings.showMenuIcons.title               "Show menu icons">

@@ -79,11 +79,17 @@
         doc = gBrowser.contentDocument; // document object of the page
         url = gBrowser.currentURI.spec; // URL of the page
         break;
-      case "places": // Bookmark item you right click on
+      case "bookmark": // Bookmark item you right click on
         places = true;
         placesNode = $("placesContext").triggerNode._placesNode;
         doc = null;
         url = placesNode.uri; // Bookmark URL
+        break;
+      case "history": // History item you right click on
+        places = true;
+        placesNode = $("historyContext").triggerNode._placesNode;
+        doc = null;
+        url = placesNode.uri; // History URL
     }
 
     doc && urlSecurityCheck(url, doc.nodePrincipal);
@@ -247,6 +253,22 @@
       showMenuIcon(id);
       $(id).hidden = isNotBookmarkItem || !isValidScheme(placesNode.uri) ||
                      !getBoolPref("showOpenPlaces") ||
+                     (isWindowPrivate(window) && isPrivateWindowReuse()) ||
+                     (/new$/.test(id) ? isPrivateWindowReuse()
+                                      : !isPrivateWindowReuse());
+    })
+  }
+
+  function initHistoryMenu(aEvent) {
+    var node = aEvent.target.triggerNode;
+    var isHistoryItem = "_placesNode" in node;
+    var placesNode = node._placesNode;
+    ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
+      var id = "historyContext-" + aId;
+      showMenuIcon(id);
+      $(id).hidden = !isHistoryItem || !getBoolPref("showOpenPlaces") ||
+                     (isHistoryItem && !isValidScheme(placesNode.uri)) ||
+                     (isWindowPrivate(window) && isPrivateWindowReuse()) ||
                      (/new$/.test(id) ? isPrivateWindowReuse()
                                       : !isPrivateWindowReuse());
     })
@@ -257,7 +279,21 @@
     if (appMenu) {
       appMenu.addEventListener("popupshowing", initAppmenu, false);
       appMenu.removeEventListener("popuphiding", initAppmenu, false);
+
+      var appMenuHistory = $("appmenu_historyMenupopup");
+      if (!appMenuHistory.hasAttribute("context")) {
+        appMenuHistory.setAttribute("context", "historyContext");
+      }
     }
+
+    var historyMenu = $("goPopup");
+    if (!historyMenu.hasAttribute("context")) {
+      historyMenu.setAttribute("context", "historyContext");
+    }
+
+    var historyContext = $("historyContext");
+    historyContext.addEventListener("popupshowing", initHistoryMenu, false);
+    historyContext.removeEventListener("popuphiding", initHistoryMenu, false);
 
     var fileMenu = $("menu_FilePopup");
     fileMenu.addEventListener("popupshowing", initFileMenu, false);
@@ -269,7 +305,7 @@
     $("OpenPrivateWindow:options").
     openPrivateWindowOptions = openPrivateWindowOptions.bind();
 
-    ["page", "link", "frame", "places"].forEach(function(aId) {
+    ["page", "link", "frame", "bookmark", "history"].forEach(function(aId) {
       $("OpenPrivateWindow:" + aId).
       openInPrivateWindow = openInPrivateWindow.bind();
     })

@@ -101,12 +101,12 @@
     var placesNode = PlacesUIUtils.getViewForNode(aEvent.target.triggerNode)
                                   .selectedNode;
     var isNotBookmarkItem = placesNode.type > 0;
-
     ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
       var id = "placesContext-" + aId;
       showMenuIcon(id);
       $(id).hidden = isNotBookmarkItem || !isValidScheme(placesNode.uri) ||
                      !getBoolPref("showOpenPlaces") ||
+                     (isWindowPrivate(window) && isPrivateWindowReuse()) ||
                      (/new$/.test(id) ? isPrivateWindowReuse()
                                       : !isPrivateWindowReuse());
     })

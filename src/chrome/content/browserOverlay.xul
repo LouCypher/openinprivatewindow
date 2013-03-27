@@ -28,8 +28,10 @@
              oncommand="openInPrivateWindow('link');"/>
     <command id="OpenPrivateWindow:frame"
              oncommand="openInPrivateWindow('frame');"/>
-    <command id="OpenPrivateWindow:places"
-             oncommand="openInPrivateWindow('places');"/>
+    <command id="OpenPrivateWindow:bookmark"
+             oncommand="openInPrivateWindow('bookmark');"/>
+    <command id="OpenPrivateWindow:history"
+             oncommand="openInPrivateWindow('history');"/>
   </commandset>
 
   <keyset id="mainKeyset">
@@ -51,6 +53,41 @@
               accesskey="&OpenInPrivateWindow.menu.exit.accesskey;"
               oncommand="BrowserTryToCloseWindow();"/>
   </vbox>
+
+  <popupset id="mainPopupSet">
+    <menupopup id="historyContext">
+      <menuitem id="historyContext-openplacesprivatenew"
+                class="OpenInPrivateWindow"
+                label="&OpenInPrivateWindow.menu.open.placesnew.label;"
+                accesskey="&OpenInPrivateWindow.menu.open.placesnew.accesskey;"
+                disabled="true"
+                command="OpenPrivateWindow:history"/>
+
+      <menuitem id="historyContext-openplacesprivate"
+                insertafter="historyContext-openplacesprivatenew"
+                class="OpenInPrivateWindow"
+                label="&OpenInPrivateWindow.menu.open.places.label;"
+                accesskey="&OpenInPrivateWindow.menu.open.places.accesskey;"
+                disabled="true"
+                command="OpenPrivateWindow:history"/>
+    </menupopup>
+  </popupset>
+
+  <menupopup id="placesContext">
+    <menuitem id="placesContext-openplacesprivatenew"
+              insertafter="placesContext_open:newwindow"
+              class="OpenInPrivateWindow"
+              label="&OpenInPrivateWindow.menu.open.placesnew.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.placesnew.accesskey;"
+              command="OpenPrivateWindow:bookmark"/>
+
+    <menuitem id="placesContext-openplacesprivate"
+              insertafter="placesContext-openplacesprivatenew"
+              class="OpenInPrivateWindow"
+              label="&OpenInPrivateWindow.menu.open.places.label;"
+              accesskey="&OpenInPrivateWindow.menu.open.places.accesskey;"
+              command="OpenPrivateWindow:bookmark"/>
+  </menupopup>
 
   <menupopup id="menu_FilePopup">
     <menuitem id="filemenu_PrivateWindow"
@@ -80,22 +117,6 @@
               class="OpenInPrivateWindow menuitem-iconic"
               label="&OpenInPrivateWindow.menu.options.label;"
               command="OpenPrivateWindow:options"/>
-  </menupopup>
-
-  <menupopup id="placesContext">
-    <menuitem id="placesContext-openplacesprivatenew"
-              insertafter="placesContext_open:newwindow"
-              class="OpenInPrivateWindow"
-              label="&OpenInPrivateWindow.menu.open.placesnew.label;"
-              accesskey="&OpenInPrivateWindow.menu.open.placesnew.accesskey;"
-              command="OpenPrivateWindow:places"/>
-
-    <menuitem id="placesContext-openplacesprivate"
-              insertafter="placesContext-openplacesprivatenew"
-              class="OpenInPrivateWindow"
-              label="&OpenInPrivateWindow.menu.open.places.label;"
-              accesskey="&OpenInPrivateWindow.menu.open.places.accesskey;"
-              command="OpenPrivateWindow:places"/>
   </menupopup>
 
   <menupopup id="contentAreaContextMenu">

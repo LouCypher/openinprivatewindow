@@ -25,5 +25,5 @@
 <!ENTITY OpenInPrivateWindow.settings.loadInBackground.desc             "Ketika saya membuka sebuah alamat di Jendela Penyamaran, jangan langsung pindah ke jendela tersebut. Pilihan ini hanya bekerja jika pilihan gunakan kembali Jendela Penyamaran dihidupkan.">
 <!ENTITY OpenInPrivateWindow.settings.showInMenu.desc                   "Tampilkan pada menu aplikasi.">
 <!ENTITY OpenInPrivateWindow.settings.showInMainContextMenu.desc        "Tampilkan pada menu konteks utama.">
-<!ENTITY OpenInPrivateWindow.settings.showInPlacesContextMenu.desc      "Tampilkan pada menu konteks markah.">
+<!ENTITY OpenInPrivateWindow.settings.showInPlacesContextMenu.desc      "Tampilkan pada menu konteks markah &amp; riwayat.">
 <!ENTITY OpenInPrivateWindow.settings.showMenuIcons.title               "Tampilkan ikon pada menu.">
