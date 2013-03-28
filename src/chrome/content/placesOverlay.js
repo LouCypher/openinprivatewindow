@@ -31,6 +31,7 @@
     // Return true if window is Private Window
   }
 
+  // Check if a tab is blank tab
   function isBlankPageURL(aURL) {
     return aURL == "about:blank" ||
            aURL == "about:privatebrowsing" ||
@@ -68,6 +69,7 @@
     openLinkIn(url, "window", { private: true });
   }
 
+  // Toggle show/hide menu icons
   function showMenuIcon(aId) {
     var menuitem = $(aId);
     var iconic = "menuitem-iconic";
@@ -78,6 +80,7 @@
     }
   }
 
+  // Check if a protocol can be opened in browser
   function isSchemeInternal(aSchemeURL) {
     var isSchemeInternal = false;
     var schemeHandler = Cc["@mozilla.org/uriloader/external-protocol-service;1"].
@@ -89,6 +92,7 @@
     return isSchemeInternal;
   }
 
+  // Check if link protocol is valid
   function isValidScheme(aURL) {
     var valid = /^(https?|file|data|chrome|about):/.test(aURL);
     if (/^(mailto|ircs?):/.test(aURL)) {
@@ -97,6 +101,7 @@
     return valid;
   }
 
+  // Initialize places context menu
   function initPlacesMenu(aEvent) {
     var placesNode = PlacesUIUtils.getViewForNode(aEvent.target.triggerNode)
                                   .selectedNode;

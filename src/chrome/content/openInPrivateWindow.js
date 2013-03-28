@@ -32,6 +32,7 @@
     // Return true if window is Private Window
   }
 
+  // Check if a tab is blank tab
   function isBlankPageURL(aURL) {
     return aURL == "about:blank" ||
            aURL == "about:privatebrowsing" ||
@@ -125,6 +126,7 @@
                                 private: true });
   }
 
+  // Toggle show/hide menu icons
   function showMenuIcon(aId) {
     var menuitem = $(aId);
     var iconic = "menuitem-iconic";
@@ -135,6 +137,7 @@
     }
   }
 
+  // Open contribution page
   function contribute() {
     AddonManager.getAddonByID(kAddonId, function(aAddon) {
       var url = aAddon.contributionURL;
@@ -152,11 +155,13 @@
     })
   }
 
+  // Open options tab in Add-ons Manager
   function openPrivateWindowOptions() {
     BrowserOpenAddonsMgr("addons://detail/" + encodeURIComponent(kAddonId) +
                          "/preferences");
   }
 
+  // Initialize app menu
   function initAppmenu() {
     var showExitMenu = getBoolPref("showExitPrivateMenu");
     $("appmenu-closePrivate").hidden = !(isWindowPrivate(window) &&
@@ -167,6 +172,7 @@
     $("appmenu_newPrivateWindow").hidden = true;
   }
 
+  // Initialize File menu
   function initFileMenu() {
     var showExitMenu = getBoolPref("showExitPrivateMenu");
     $("filemenu-closePrivate").hidden = !(isWindowPrivate(window) && showExitMenu);
@@ -181,6 +187,7 @@
                                         !isWindowPrivate(window);
   }
 
+  // Check if a protocol can be opened in browser
   function isSchemeInternal(aSchemeURL) {
     var isSchemeInternal = false;
     var schemeHandler = Cc["@mozilla.org/uriloader/external-protocol-service;1"].
@@ -192,6 +199,7 @@
     return isSchemeInternal;
   }
 
+  // Check if link protocol is valid
   function isValidScheme(aURL) {
     var valid = /^(https?|file|data|chrome|about):/.test(aURL);
     if (/^(mailto|ircs?):/.test(aURL)) {
@@ -200,6 +208,7 @@
     return valid;
   }
 
+  // Initialize main context menu
   function initContextMenu(aEvent) {
     var GX = gContextMenu;
 
@@ -245,6 +254,7 @@
      "context-closeprivatewindow"].forEach(showMenuIcon);
   }
 
+  // Initialize Bookmarks context menu
   function initPlacesMenu(aEvent) {
     var placesNode = aEvent.target.triggerNode._placesNode;
     var isNotBookmarkItem = placesNode.type > 0;
@@ -259,6 +269,7 @@
     })
   }
 
+  // Initialize History context menu
   function initHistoryMenu(aEvent) {
     var node = aEvent.target.triggerNode;
     var isHistoryItem = "_placesNode" in node;
@@ -276,7 +287,7 @@
 
   function onLoad() {
     var appMenu = $("appmenu-popup");
-    if (appMenu) {
+    if (appMenu) { // Windows only
       appMenu.addEventListener("popupshowing", initAppmenu, false);
       appMenu.removeEventListener("popuphiding", initAppmenu, false);
 
@@ -310,6 +321,7 @@
       openInPrivateWindow = openInPrivateWindow.bind();
     })
 
+    // Move Open Frame... menuitems into Frame menu in context menu
     var separator = document.querySelector("#context-openframe + menuseparator");
     ["openframeprivatenew", "openframeprivate"].forEach(function(aId) {
       var menuitem = $("context-" + aId);
@@ -324,6 +336,7 @@
     placesMenu.addEventListener("popupshowing", initPlacesMenu, false);
     placesMenu.removeEventListener("popuphiding", initPlacesMenu, false);
 
+    // Load contribution page on startup at first running
     getBoolPref("firstRun") && navigator.onLine
                             && !isWindowPrivate(window) && contribute();
   }
