@@ -126,17 +126,6 @@
                                 private: true });
   }
 
-  // Toggle show/hide menu icons
-  function showMenuIcon(aId) {
-    var menuitem = $(aId);
-    var iconic = "menuitem-iconic";
-    if (getBoolPref("showMenuIcons")) {
-      menuitem.classList.add(iconic);
-    } else {
-      menuitem.classList.remove(iconic);
-    }
-  }
-
   // Open contribution page
   function contribute() {
     AddonManager.getAddonByID(kAddonId, function(aAddon) {
@@ -159,6 +148,38 @@
   function openPrivateWindowOptions() {
     BrowserOpenAddonsMgr("addons://detail/" + encodeURIComponent(kAddonId) +
                          "/preferences");
+  }
+
+  // Toggle show/hide menu icons
+  function showMenuIcon(aId) {
+    var menuitem = $(aId);
+    var iconic = "menuitem-iconic";
+    if (getBoolPref("showMenuIcons")) {
+      menuitem.classList.add(iconic);
+    } else {
+      menuitem.classList.remove(iconic);
+    }
+  }
+
+  // Check if a protocol can be opened in browser
+  function isSchemeInternal(aSchemeURL) {
+    var isSchemeInternal = false;
+    var schemeHandler = Cc["@mozilla.org/uriloader/external-protocol-service;1"].
+                        getService(Ci.nsIExternalProtocolService).
+                        getProtocolHandlerInfo(aSchemeURL);
+    isSchemeInternal = (!schemeHandler.alwaysAskBeforeHandling &&
+                        schemeHandler.preferredAction == Ci.nsIHandlerInfo.useHelperApp &&
+                        (schemeHandler.preferredApplicationHandler instanceof Ci.nsIWebHandlerApp));
+    return isSchemeInternal;
+  }
+
+  // Check if link protocol is valid
+  function isValidScheme(aURL) {
+    var valid = /^(https?|file|data|chrome|about):/.test(aURL);
+    if (/^(mailto|ircs?):/.test(aURL)) {
+      valid = isSchemeInternal(aURL.match(/^[a-z-0-9]+/));
+    }
+    return valid;
   }
 
   // Initialize app menu
@@ -187,25 +208,35 @@
                                         !isWindowPrivate(window);
   }
 
-  // Check if a protocol can be opened in browser
-  function isSchemeInternal(aSchemeURL) {
-    var isSchemeInternal = false;
-    var schemeHandler = Cc["@mozilla.org/uriloader/external-protocol-service;1"].
-                        getService(Ci.nsIExternalProtocolService).
-                        getProtocolHandlerInfo(aSchemeURL);
-    isSchemeInternal = (!schemeHandler.alwaysAskBeforeHandling &&
-                        schemeHandler.preferredAction == Ci.nsIHandlerInfo.useHelperApp &&
-                        (schemeHandler.preferredApplicationHandler instanceof Ci.nsIWebHandlerApp));
-    return isSchemeInternal;
+  // Initialize Bookmarks context menu
+  function initPlacesMenu(aEvent) {
+    var placesNode = aEvent.target.triggerNode._placesNode;
+    var isNotBookmarkItem = placesNode.type > 0;
+    ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
+      var id = "placesContext-" + aId;
+      showMenuIcon(id);
+      $(id).hidden = isNotBookmarkItem || !isValidScheme(placesNode.uri) ||
+                     !getBoolPref("showOpenPlaces") ||
+                     (isWindowPrivate(window) && isPrivateWindowReuse()) ||
+                     (/new$/.test(id) ? isPrivateWindowReuse()
+                                      : !isPrivateWindowReuse());
+    })
   }
 
-  // Check if link protocol is valid
-  function isValidScheme(aURL) {
-    var valid = /^(https?|file|data|chrome|about):/.test(aURL);
-    if (/^(mailto|ircs?):/.test(aURL)) {
-      valid = isSchemeInternal(aURL.match(/^[a-z-0-9]+/));
-    }
-    return valid;
+  // Initialize History context menu
+  function initHistoryMenu(aEvent) {
+    var node = aEvent.target.triggerNode;
+    var isHistoryItem = "_placesNode" in node;
+    var placesNode = node._placesNode;
+    ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
+      var id = "historyContext-" + aId;
+      showMenuIcon(id);
+      $(id).hidden = !isHistoryItem || !getBoolPref("showOpenPlaces") ||
+                     (isHistoryItem && !isValidScheme(placesNode.uri)) ||
+                     (isWindowPrivate(window) && isPrivateWindowReuse()) ||
+                     (/new$/.test(id) ? isPrivateWindowReuse()
+                                      : !isPrivateWindowReuse());
+    })
   }
 
   // Initialize main context menu
@@ -247,44 +278,13 @@
                 !(GX.onTextInput || GX.onLink || GX.isContentSelected ||
                   GX.onImage || GX.onCanvas || GX.onVideo || GX.onAudio));
 
-    GX.showItem("context-closeprivatewindow-separator",
-                getBoolPref("showExitPrivateContextMenu") && onPrivateWindow);
+    $("context-closeprivatewindow-separator").
+    hidden = $("context-closeprivatewindow").hidden;
 
     ["context-openlinkprivate", "context-openlinkprivate2",
      "context-openpageprivatenew", "context-openpageprivate",
      "context-openframeprivatenew", "context-openframeprivate",
      "context-closeprivatewindow"].forEach(showMenuIcon);
-  }
-
-  // Initialize Bookmarks context menu
-  function initPlacesMenu(aEvent) {
-    var placesNode = aEvent.target.triggerNode._placesNode;
-    var isNotBookmarkItem = placesNode.type > 0;
-    ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
-      var id = "placesContext-" + aId;
-      showMenuIcon(id);
-      $(id).hidden = isNotBookmarkItem || !isValidScheme(placesNode.uri) ||
-                     !getBoolPref("showOpenPlaces") ||
-                     (isWindowPrivate(window) && isPrivateWindowReuse()) ||
-                     (/new$/.test(id) ? isPrivateWindowReuse()
-                                      : !isPrivateWindowReuse());
-    })
-  }
-
-  // Initialize History context menu
-  function initHistoryMenu(aEvent) {
-    var node = aEvent.target.triggerNode;
-    var isHistoryItem = "_placesNode" in node;
-    var placesNode = node._placesNode;
-    ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
-      var id = "historyContext-" + aId;
-      showMenuIcon(id);
-      $(id).hidden = !isHistoryItem || !getBoolPref("showOpenPlaces") ||
-                     (isHistoryItem && !isValidScheme(placesNode.uri)) ||
-                     (isWindowPrivate(window) && isPrivateWindowReuse()) ||
-                     (/new$/.test(id) ? isPrivateWindowReuse()
-                                      : !isPrivateWindowReuse());
-    })
   }
 
   function onLoad() {
