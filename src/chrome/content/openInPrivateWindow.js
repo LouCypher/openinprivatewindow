@@ -243,7 +243,9 @@
                 getBoolPref("showOpenFrame") && !onPrivateWindow && reuseWindow);
 
     GX.showItem("context-closeprivatewindow",
-                getBoolPref("showExitPrivateContextMenu") && onPrivateWindow);
+                getBoolPref("showExitPrivateContextMenu") && onPrivateWindow &&
+                !(GX.onTextInput || GX.onLink || GX.isContentSelected ||
+                  GX.onImage || GX.onCanvas || GX.onVideo || GX.onAudio));
 
     GX.showItem("context-closeprivatewindow-separator",
                 getBoolPref("showExitPrivateContextMenu") && onPrivateWindow);
