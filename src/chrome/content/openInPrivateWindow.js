@@ -207,12 +207,15 @@
 
   // Initialize Bookmarks context menu
   function initPlacesMenu(aEvent) {
-    var placesNode = aEvent.target.triggerNode._placesNode;
-    var isNotBookmarkItem = placesNode.type > 0;
+    var node = aEvent.target.triggerNode;
+    var isPlacesNode = "_placesNode" in node;
+    var placesNode = node._placesNode;
+    var isNotBookmarkItem = isPlacesNode && placesNode.type > 0;
     ["openplacesprivatenew", "openplacesprivate"].forEach(function(aId) {
       var id = "placesContext-" + aId;
       showMenuIcon(id);
-      $(id).hidden = isNotBookmarkItem || !isValidScheme(placesNode.uri) ||
+      $(id).hidden = (!isPlacesNode || isNotBookmarkItem) ||
+                     !isValidScheme(placesNode.uri) ||
                      !getBoolPref("showOpenPlaces") ||
                      (isWindowPrivate(window) && isPrivateWindowReuse()) ||
                      (/new$/.test(id) ? isPrivateWindowReuse()
