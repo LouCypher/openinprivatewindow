@@ -5,3 +5,4 @@ locale    openinprivatewindow   id                chrome/locale/id/
 overlay   chrome://browser/content/browser.xul                    chrome://openinprivatewindow/content/browserOverlay.xul
 overlay   chrome://browser/content/bookmarks/bookmarksPanel.xul   chrome://openinprivatewindow/content/placesOverlay.xul
 overlay   chrome://browser/content/history/history-panel.xul      chrome://openinprivatewindow/content/placesOverlay.xul
+override  chrome://browser/content/aboutPrivateBrowsing.xhtml     chrome://openinprivatewindow/content/aboutPrivateBrowsing.xhtml
