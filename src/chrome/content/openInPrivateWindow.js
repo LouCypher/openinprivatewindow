@@ -190,8 +190,8 @@
     $("appmenu-quit").hidden = !$("appmenu-closePrivate").hidden;
     $("appmenu_PrivateWindow").hidden = !isPrivateWindowReuse() ||
                                         isWindowPrivate(window);
-    $("appmenu_newPrivateWindow").hidden = isPrivateWindowReuse() &&
-                                           !isWindowPrivate(window);
+    $("appmenu_newPrivateWindow").hidden = isPrivateWindowReuse() ||
+                                           isWindowPrivate(window);
   }
 
   // Initialize File menu
@@ -201,8 +201,8 @@
     $("menu_FileQuitItem").hidden = !$("filemenu-closePrivate").hidden;
     $("filemenu_PrivateWindow").hidden = !isPrivateWindowReuse() ||
                                          isWindowPrivate(window);
-    $("menu_newPrivateWindow").hidden = isPrivateWindowReuse() &&
-                                        !isWindowPrivate(window);
+    $("menu_newPrivateWindow").hidden = isPrivateWindowReuse() ||
+                                        isWindowPrivate(window);
   }
 
   // Initialize Bookmarks context menu
