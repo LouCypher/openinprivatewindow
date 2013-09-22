@@ -290,8 +290,8 @@
   function onLoad() {
     var appMenu = $("appmenu-popup");
     if (appMenu) { // Windows only
-      appMenu.addEventListener("popupshowing", initAppmenu, false);
-      appMenu.removeEventListener("popuphiding", initAppmenu, false);
+      appMenu.addEventListener("popupshowing", initAppmenu);
+      appMenu.removeEventListener("popuphiding", initAppmenu);
 
       var appMenuHistory = $("appmenu_historyMenupopup");
       if (!appMenuHistory.hasAttribute("context")) {
@@ -305,12 +305,12 @@
     }
 
     var historyContext = $("historyContext");
-    historyContext.addEventListener("popupshowing", initHistoryMenu, false);
-    historyContext.removeEventListener("popuphiding", initHistoryMenu, false);
+    historyContext.addEventListener("popupshowing", initHistoryMenu);
+    historyContext.removeEventListener("popuphiding", initHistoryMenu);
 
     var fileMenu = $("menu_FilePopup");
-    fileMenu.addEventListener("popupshowing", initFileMenu, false);
-    fileMenu.removeEventListener("popuphiding", initFileMenu, false);
+    fileMenu.addEventListener("popupshowing", initFileMenu);
+    fileMenu.removeEventListener("popuphiding", initFileMenu);
 
     $("OpenPrivateWindow:switchto").
     openNewOrSwitchToPrivateWindow = openNewOrSwitchToPrivateWindow.bind();
@@ -331,19 +331,19 @@
     })
 
     var contextmenu = $("contentAreaContextMenu");
-    contextmenu.addEventListener("popupshowing", initContextMenu, false);
-    contextmenu.removeEventListener("popuphiding", initContextMenu, false);
+    contextmenu.addEventListener("popupshowing", initContextMenu);
+    contextmenu.removeEventListener("popuphiding", initContextMenu);
 
     var placesMenu = $("placesContext");
-    placesMenu.addEventListener("popupshowing", initPlacesMenu, false);
-    placesMenu.removeEventListener("popuphiding", initPlacesMenu, false);
+    placesMenu.addEventListener("popupshowing", initPlacesMenu);
+    placesMenu.removeEventListener("popuphiding", initPlacesMenu);
 
     // Load contribution page on startup at first running
     getBoolPref("firstRun") && navigator.onLine
                             && !isWindowPrivate(window) && contribute();
   }
 
-  window.addEventListener("load", onLoad, false);
-  window.removeEventListener("unload", onLoad, false);
+  window.addEventListener("load", onLoad);
+  window.removeEventListener("unload", onLoad);
 
 })()

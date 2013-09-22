@@ -1,6 +1,6 @@
 # Open in Private Window
 
-Add more context menu items and options to open a URL in Firefox Private Window.
+Add more options to open for Firefox Private Window.
 
 ## Compatibility
 

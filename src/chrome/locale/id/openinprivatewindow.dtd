@@ -17,8 +17,11 @@
 <!ENTITY OpenInPrivateWindow.menu.open.places.accesskey     "a">
 <!ENTITY OpenInPrivateWindow.menu.options.label             "Buka Pilihan Jendela Penyamaran">
 <!ENTITY OpenInPrivateWindow.menu.options.accesskey         "J">
+
 <!ENTITY OpenInPrivateWindow.settings.reusePrivateWindow.title          "Gunakan kembali Jendela Penyamaran">
 <!ENTITY OpenInPrivateWindow.settings.reusePrivateWindow.desc           "Gunakan buka Jendela Penyamaran baru yang sudah terbuka.">
+<!ENTITY OpenInPrivateWindow.settings.useNewTab.title                   "Gunakan pilihan Tab Baru">
+<!ENTITY OpenInPrivateWindow.settings.useNewTab.desc                    "Gunakan pilihan Tab Baru perambah ketika membuka sebuah tab baru di Jendela Penyamaran.">
 <!ENTITY OpenInPrivateWindow.settings.sendReferrer.title                "Kirim perujuk asli">
 <!ENTITY OpenInPrivateWindow.settings.sendReferrer.desc                 "Kirim perujuk asli ketika saya membuka sebuah alamat di Jendela Penyamaran">
 <!ENTITY OpenInPrivateWindow.settings.loadInBackground.title            "Memuat Jendela Penyamaran di latar belakang">

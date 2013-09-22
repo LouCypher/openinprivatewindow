@@ -17,8 +17,11 @@
 <!ENTITY OpenInPrivateWindow.menu.open.places.accesskey     "v">
 <!ENTITY OpenInPrivateWindow.menu.options.label             "Open in Private Window Options">
 <!ENTITY OpenInPrivateWindow.menu.options.accesskey         "v">
+
 <!ENTITY OpenInPrivateWindow.settings.reusePrivateWindow.title          "Reuse Private Window">
 <!ENTITY OpenInPrivateWindow.settings.reusePrivateWindow.desc           "Don't open new Private Window if it's already open. Use it instead.">
+<!ENTITY OpenInPrivateWindow.settings.useNewTab.title                   "Use New Tab setting">
+<!ENTITY OpenInPrivateWindow.settings.useNewTab.desc                    "Use browser New Tab setting when open a new tab in Private Window.">
 <!ENTITY OpenInPrivateWindow.settings.sendReferrer.title                "Send original referrer">
 <!ENTITY OpenInPrivateWindow.settings.sendReferrer.desc                 "Send original referrer when I open a URL in Private Window.">
 <!ENTITY OpenInPrivateWindow.settings.loadInBackground.title            "Load Private Window in background">

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+-->
 <!DOCTYPE html [
   <!ENTITY % htmlDTD PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
   %htmlDTD;
@@ -39,18 +41,6 @@
       Components.utils.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
       Components.utils.import("resource://gre/modules/Services.jsm");
 
-      function isWindowPrivate(aWindow) {
-        return PrivateBrowsingUtils.isWindowPrivate(aWindow);
-      }
-
-      if (!isWindowPrivate(window)) {
-        document.title = "]]>&privatebrowsingpage.title.normal;<![CDATA[";
-        setFavIcon("chrome://global/skin/icons/question-16.png");
-      } else {
-        document.title = "]]>&privatebrowsingpage.title;<![CDATA[";
-        setFavIcon("chrome://browser/skin/Privacy-16.png");
-      }
-
       var mainWindow = window.QueryInterface(Ci.nsIInterfaceRequestor)
                              .getInterface(Ci.nsIWebNavigation)
                              .QueryInterface(Ci.nsIDocShellTreeItem)
@@ -60,6 +50,31 @@
 
       // Focus the location bar
       mainWindow.focusAndSelectUrlBar();
+
+      function isWindowPrivate(aWindow) {
+        return PrivateBrowsingUtils.isWindowPrivate(aWindow);
+      }
+
+      if (!isWindowPrivate(window)) {
+        document.title = "]]>&privatebrowsingpage.title.normal;<![CDATA[";
+        setFavIcon("chrome://global/skin/icons/question-16.png");
+      } else {
+        let tabs = mainWindow.gBrowser.tabs;
+        let tab = mainWindow.gBrowser.mCurrentTab;
+        if (Services.prefs.getBoolPref("extensions.OpenInPrivateWindow.useNewTab") &&
+            (tabs.length > 1 || tab.hasAttribute("last-visible-tab"))) {
+          let newTabURL;
+          try {
+            newTabURL = Services.prefs.getCharPref("extensions.tabmix.loadOnNewTab.type");
+          } catch(ex) {
+            newTabURL = Services.prefs.getCharPref("browser.newtab.url");
+          }
+          location.replace(newTabURL);
+        } else {
+          document.title = "]]>&privatebrowsingpage.title;<![CDATA[";
+          setFavIcon("chrome://browser/skin/Privacy-16.png");
+        }
+      }
 
       function setFavIcon(url) {
         var icon = document.createElement("link");
@@ -89,7 +104,7 @@
         var appMenuButtonIsVisible = menuBar.getAttribute("autohide") == "true";
         document.body.classList.add(appMenuButtonIsVisible ? "appMenuButtonVisible" :
                                                              "appMenuButtonInvisible");
-      }, false);
+      });
 
       function openPrivateWindowOptions() {
         mainWindow.BrowserOpenAddonsMgr("addons://detail/" +
@@ -101,17 +116,13 @@
         var prefString = "extensions.OpenInPrivateWindow.reusePrivateWindow";
         var isPrivateWindowReuse = Services.prefs.getBoolPref(prefString);
         if (isPrivateWindowReuse) { // If 'Reuse Private Window' option is on
-          if (isWindowPrivate(window)) {
-            // If current window is Private Window, open a new tab
-            gBrowser.selectedTab = gBrowser.addTab("about:privatebrowsing");
-            return;
-          }
           var index = 1;
           var em = Services.wm.getEnumerator("navigator:browser");
           while (em.hasMoreElements()) {
             let win = em.getNext();
             if (isWindowPrivate(win)) {
               // If win is Private Window focus window
+              win.focus();
               return;
             }
           }

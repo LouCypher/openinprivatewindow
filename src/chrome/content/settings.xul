@@ -17,6 +17,11 @@
            title="&OpenInPrivateWindow.settings.reusePrivateWindow.title;"
            desc="&OpenInPrivateWindow.settings.reusePrivateWindow.desc;"/>
 
+  <setting pref="extensions.OpenInPrivateWindow.useNewTab"
+           type="bool"
+           title="&OpenInPrivateWindow.settings.useNewTab.title;"
+           desc="&OpenInPrivateWindow.settings.useNewTab.desc;"/>
+
   <setting pref="extensions.OpenInPrivateWindow.sendReferrer"
            type="bool"
            title="&OpenInPrivateWindow.settings.sendReferrer.title;"
